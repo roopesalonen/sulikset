@@ -1,5 +1,5 @@
 ## Needed components ##
-`npm install react`     https://reactjs.org/
+`npm install react`     https://reactjs.org/<br />
 `npm install victory`   https://formidable.com/open-source/victory/
 
 
