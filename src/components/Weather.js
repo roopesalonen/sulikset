@@ -6,6 +6,11 @@ import { VictoryChart, VictoryLine, VictoryTheme, VictoryArea, VictoryLabel, Vic
 
 function Weather() {
 
+    function convertUTCDateToLocalDate(date){ //muutetaan paikalliseen aikaan
+        new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+        return date;
+    }
+
 const initWeather = [];
 const [weather, setWeather] = useState(initWeather);
 
@@ -18,12 +23,12 @@ fetch('https://funcvariaiot.azurewebsites.net/api/HttpTriggerGetIotData?code=qO5
     let Temp = [];
     let Hum = [];
         weather.slice(0, 24).reverse().map(weath => { //tuo jsonista 24 viimeisintä tulosta
-        const measurementTime = weath.PublishedAt.split('T')[1].split(':')[0] + ':' + weath.PublishedAt.split(':')[1] //tuo kellonajan muotoon tunti:minuutti
-        Temp.push({ time: String(measurementTime), result: parseInt(weath.Temp) }); //x(time) saa kellonaika- ja y(result) lämpötiladatan
-        Hum.push({ time: String(measurementTime), result: parseInt(weath.Hum) }); //x(time) saa kellonaika- ja y(result) ilmankosteusdatan
+        const fixedTime = String(convertUTCDateToLocalDate(new Date(weath.PublishedAt))); //tuodaan paikallinen aika
+        const aika = fixedTime.split(' ')[4].split(':')[0] + ":" + fixedTime.split(' ')[4].split(':')[1]; //laitetaan kellonaika oikeen muotoon
+        Temp.push({ time: String(aika), result: parseInt(weath.Temp) }); //x(time) saa kellonaika- ja y(result) lämpötiladatan
+        Hum.push({ time: String(aika), result: parseInt(weath.Hum) }); //x(time) saa kellonaika- ja y(result) ilmankosteusdatan
         return <div key={errorfix++} />
 })
-
 
 return (
     <div align="center">
