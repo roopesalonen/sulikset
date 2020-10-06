@@ -15,14 +15,16 @@ const initWeather = [];
 const [weather, setWeather] = useState(initWeather);
 
 //tuodaan json data api:sta
-fetch('https://funcvariaiot.azurewebsites.net/api/HttpTriggerGetIotData?code=qO5qkShg0osHqY0BB2nfXI/anPgQ/K/3mIF7VTCFfaTdrvo6wl6DKw==&amount=50')
+fetch('https://funcvariaiot.azurewebsites.net/api/HttpTriggerGetIotData?code=qO5qkShg0osHqY0BB2nfXI/anPgQ/K/3mIF7VTCFfaTdrvo6wl6DKw==&amount=500')
     .then(response => response.json())
     .then(json => setWeather([...json]));
+
+    const deviceToShow = weather.filter(device => device.DeviceId.includes('300044001947393035313138'));
 
     let errorfix = 1;
     let Temp = [];
     let Hum = [];
-        weather.slice(0, 24).reverse().map(weath => { //tuo jsonista 24 viimeisintä tulosta
+        deviceToShow.slice(0, 24).reverse().map(weath => { //tuo jsonista 24 viimeisintä tulosta
         const fixedTime = String(convertUTCDateToLocalDate(new Date(weath.PublishedAt))); //tuodaan paikallinen aika
         const aika = fixedTime.split(' ')[4].split(':')[0] + ":" + fixedTime.split(' ')[4].split(':')[1]; //laitetaan kellonaika oikeen muotoon
         Temp.push({ time: String(aika), result: parseInt(weath.Temp) }); //x(time) saa kellonaika- ja y(result) lämpötiladatan
