@@ -15,7 +15,7 @@ const initWeather = [];
 const [weather, setWeather] = useState(initWeather);
 
 //tuodaan json data api:sta
-fetch('https://funcvariaiot.azurewebsites.net/api/HttpTriggerGetIotData?code=qO5qkShg0osHqY0BB2nfXI/anPgQ/K/3mIF7VTCFfaTdrvo6wl6DKw==&amount=52000')
+fetch('https://funcvariaiot.azurewebsites.net/api/HttpTriggerGetIotData?code=qO5qkShg0osHqY0BB2nfXI/anPgQ/K/3mIF7VTCFfaTdrvo6wl6DKw==&amount=54000')
     .then(response => response.json())
     .then(json => setWeather([...json]));
 
